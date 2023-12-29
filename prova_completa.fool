@@ -1,0 +1,42 @@
+let
+	
+	class C(first:int, second:int, third:int) {
+		fun getFirst:int() 
+			first;
+		fun getSecond:int() 
+			second;
+		fun getThird:int() 
+			third;
+		fun compute:bool() 
+			(first / second) >= third;
+		fun testCondition:bool(test:(int,int,int)->bool) 
+			test(getFirst(), getSecond(), getThird());
+		fun testValue:int(getVal:(int,int,int)->int) 
+			getVal(getFirst(), getSecond(), getThird());
+	}
+	
+	class A extends C(value:bool) {
+		fun getNotValue:bool() 
+			!(value);
+	}
+	
+	class B extends C() {
+		fun compute:bool() 
+			(first / second) <= third;
+	}
+	
+	fun test:bool(a:int, b:int, c:int) 
+		(a / b) >= c;	
+		
+	fun get:int(a:int, b:int, c:int) 
+		a - b - c;
+		
+	var a:A = new A(12, 4, 6, true);
+	var b:B = new B(2, 1, 3);
+	var c:C = if (a.testCondition(test) || (a.getNotValue() && b.compute())) then {a} else {b};
+			
+in
+	
+	print(c.testValue(get));
+
+	
